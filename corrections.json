@@ -1,0 +1,32 @@
+{
+  "smash": {
+    "LOW ELBOW": "Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.",
+    "KINETIC CHAIN COLLAPSED": "Keep non-racket arm up during the preparation phase to balance the body and facilitate torso rotation.",
+    "FLAT-FOOTED": "Initiate a scissor kick or active weight transfer. Your knees are too straight (over 165°), preventing explosive power from the legs.",
+    "BENT ARM": "Extend your arm fully at the point of contact. Ensure your elbow angle reaches at least 160° to maximize the height and steepness of the smash."
+  },
+  "drop_shot": {
+    "TELEGRAPHING": "Increase your swing speed during preparation to match your smash velocity. Slowing down early allows opponents to predict the drop.",
+    "STIFF WRIST": "Add a wrist snap at the point of contact. You need higher forearm rotational velocity to achieve a sharp downward angle over the net.",
+    "LEANING BACK": "Shift your center of gravity forward. Your wrist is behind your shoulder, which pushes the bird upward rather than downward.",
+    "TOO STIFF": "Soften your elbow slightly (below 175°) to provide better touch and control for the shuttle's placement."
+  },
+  "serve": {
+    "ELBOW TOO HIGH": "Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.",
+    "UNSTABLE STANCE": "Bend your knees and widen your feet to lower your center of gravity and provide a stable base for the service motion.",
+    "SERVICE FAULT RISK": "Lower your contact point. The wrist height is currently above 120cm; contact must be made below the waist (waist-height) to be legal.",
+    "EXCESSIVE MOVEMENT": "Minimize torso rotation. Keep your body stable and quiet to ensure the shuttle clears the net by the smallest possible margin.",
+    "COLLAPSED ELBOW": "Keep your elbow extended (above 140°) to create a consistent pendulum motion for the serve."
+  },
+  "forehand": {
+    "CONTACT TOO LATE": "Move your contact point forward. You are currently hitting the shuttle behind your shoulder line; aim to hit in front of your body.",
+    "USE YOUR CORE": "Engage your hips and torso. Your current rotation is below 5°, meaning you are hitting only with your arm instead of your whole body.",
+    "EXTEND ARM": "Reach through the contact point. Your elbow is too bent (under 150°), which reduces your hitting radius and power."
+  },
+  "backhand": {
+    "TURN YOUR BACK": "Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.",
+    "ELBOW TUCKED": "Lead the movement with a high elbow. Do not keep the elbow tucked against your ribs; it needs space to snap the racket forward.",
+    "THUMB UP": "Adjust your grip. Ensure your thumb is pressed firmly against the flat side of the handle to provide leverage for the backhand flick.",
+    "REACH ACROSS": "Extend your arm across your body. You are currently hitting too close to your shoulder, which prevents a full swing arc."
+  }
+}

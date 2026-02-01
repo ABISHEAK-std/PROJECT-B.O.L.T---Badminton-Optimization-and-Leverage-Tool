@@ -1,0 +1,332 @@
+=== Badminton Coaching Session Log ===
+Started: 2026-02-01 04:18:15
+
+[2026-02-01 04:18:37] Video Time: 2.80s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:18:37] Video Time: 2.83s
+  Shot: BACKHAND
+  Error: [X] KINETIC CHAIN COLLAPSED: Keep non-racket arm up
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:18:53] Video Time: 4.27s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:18:53] Video Time: 4.30s
+  Shot: SMASH
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:19:15] Video Time: 6.03s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:19:15] Video Time: 6.07s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:19:22] Video Time: 6.67s
+  Shot: SERVE
+  Error: [X] SERVICE FAULT RISK: Contact below waist
+  Advice: Lower your contact point. The wrist height is currently above 120cm; contact must be made below the waist (waist-height) to be legal.
+
+[2026-02-01 04:19:23] Video Time: 6.70s
+  Shot: SERVE
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:19:33] Video Time: 7.67s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:19:33] Video Time: 7.70s
+  Shot: SMASH
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:19:40] Video Time: 8.30s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:19:40] Video Time: 8.33s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:19:46] Video Time: 8.93s
+  Shot: SERVE
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.
+
+[2026-02-01 04:19:46] Video Time: 8.97s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:19:56] Video Time: 9.83s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:19:56] Video Time: 9.87s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:25:37] Video Time: 0.83s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:25:37] Video Time: 0.87s
+  Shot: BACKHAND
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:25:48] Video Time: 1.47s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:25:48] Video Time: 1.50s
+  Shot: SMASH
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:26:27] Video Time: 0.13s
+  Shot: SERVE
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.
+
+[2026-02-01 04:26:27] Video Time: 0.20s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:26:33] Video Time: 0.90s
+  Shot: SERVE
+  Status: SUCCESS - [OK] GOOD STANCE: Low and stable
+
+[2026-02-01 04:26:33] Video Time: 0.93s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:26:44] Video Time: 1.47s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:26:44] Video Time: 1.50s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:27:29] Video Time: 3.63s
+  Shot: SERVE
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.
+
+[2026-02-01 04:27:30] Video Time: 3.67s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:27:38] Video Time: 4.23s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:27:38] Video Time: 4.27s
+  Shot: BACKHAND
+  Error: [X] UNSTABLE STANCE: Bend knees, widen feet
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:27:47] Video Time: 4.77s
+  Shot: SERVE
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.
+
+[2026-02-01 04:27:47] Video Time: 4.80s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:27:57] Video Time: 5.30s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:27:57] Video Time: 5.33s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:28:19] Video Time: 6.40s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:28:19] Video Time: 6.43s
+  Shot: SMASH
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:28:29] Video Time: 7.03s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:28:29] Video Time: 7.07s
+  Shot: BACKHAND
+  Error: [X] UNSTABLE STANCE: Bend knees, widen feet
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:28:46] Video Time: 9.27s
+  Shot: SERVE
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.
+
+[2026-02-01 04:28:46] Video Time: 9.30s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:29:09] Video Time: 11.07s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:29:09] Video Time: 11.10s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:29:17] Video Time: 12.23s
+  Shot: SERVE
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.
+
+[2026-02-01 04:29:17] Video Time: 12.27s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:44:25] Video Time: 5.83s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:44:26] Video Time: 5.87s
+  Shot: BACKHAND
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:44:27] Video Time: 6.60s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:44:28] Video Time: 6.63s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:45:22] Video Time: 0.83s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:45:22] Video Time: 0.87s
+  Shot: BACKHAND
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:45:27] Video Time: 1.47s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:45:27] Video Time: 1.50s
+  Shot: SMASH
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:55:26] Video Time: 0.83s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:55:27] Video Time: 0.87s
+  Shot: BACKHAND
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:55:32] Video Time: 1.47s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:55:32] Video Time: 1.50s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:55:36] Video Time: 1.77s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:55:36] Video Time: 1.80s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:58:10] Video Time: 3.80s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:58:10] Video Time: 3.83s
+  Shot: BACKHAND
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:58:19] Video Time: 4.43s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 04:58:19] Video Time: 4.47s
+  Shot: SMASH
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:59:55] Video Time: 9.97s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 04:59:55] Video Time: 10.00s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 04:59:58] Video Time: 11.00s
+  Shot: SERVE
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.
+
+[2026-02-01 04:59:58] Video Time: 11.03s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+

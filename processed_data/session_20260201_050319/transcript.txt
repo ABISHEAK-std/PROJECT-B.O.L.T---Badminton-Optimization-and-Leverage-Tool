@@ -1,0 +1,71 @@
+=== Badminton Coaching Session Log ===
+Started: 2026-02-01 05:01:55
+
+[2026-02-01 05:03:33] Video Time: 2.03s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 05:03:33] Video Time: 2.07s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 05:03:45] Video Time: 2.67s
+  Shot: SERVE
+  Status: SUCCESS - [OK] GOOD STANCE: Low and stable
+
+[2026-02-01 05:03:45] Video Time: 2.70s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 05:03:53] Video Time: 3.30s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 05:03:53] Video Time: 3.33s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 05:04:00] Video Time: 3.93s
+  Shot: SERVE
+  Error: [X] UNSTABLE STANCE: Bend knees, widen feet
+  Advice: Bend your knees and widen your feet to lower your center of gravity and provide a stable base for the service motion.
+
+[2026-02-01 05:04:00] Video Time: 3.97s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 05:04:08] Video Time: 4.67s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 05:04:08] Video Time: 4.70s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 05:04:19] Video Time: 5.63s
+  Shot: SERVE
+  Status: SUCCESS - [OK] GOOD STANCE: Low and stable
+
+[2026-02-01 05:04:19] Video Time: 5.67s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 05:04:36] Video Time: 6.70s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 05:04:36] Video Time: 6.73s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+

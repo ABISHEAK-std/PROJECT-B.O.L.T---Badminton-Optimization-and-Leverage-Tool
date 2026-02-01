@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "badmintonposecorrection",
+  "private_key_id": "102171a52f8793a73344c65ecbbb8bfca783a1dc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCmwJMFYp0eBUFD\nVN90PubRTG6y6cBLqTnPE9ykW8ITOR8M0DiB1VI0vMQFxsSqdkA60b9DjkeOKuXL\nUiOyQspoDBoIcRAf2XW2v4AEsJ1kuOPc5DcCo+fkSd8OTmwOrKJwTEUimlM4QOQS\nn/VuvYahD4hCj8TXGUSGN0tGvpBMv04GpMZEDoyQREJORCr8cai/NZy41YnLwgYV\n4wm3GNIhpSuwqZah/5GrrQBkJRpXGQSmew7sHY/DabtsK3T1xOjfVSEN0ameoHFM\n4xHp96jdphFrIDpOKPjBiHhR3kSe0iWl5EDBj2YSX9jdOk8lnqo8ks2vu1pca5ZC\nZfPILe/PAgMBAAECggEAGAl0Z/dSHKy3PqRyXYhfr1XsMyAc1ws6yQ3c5VhQvoKi\nZi9xpc2BPxbizs5bNRM8qP3pKyzMRcMLQubBPIYCNUNhUUwy/dRT8pbiNkrbNVSt\ni/7dqyTDXZYEcER/sRHTjIqCAL3sNxSri7/BGkh5qqfZhXbB8huzVAGOeVEo7db9\n6SnNnzVzCK3gMZmCuMeBOJO3l0WvyOO7rLni8YMfs5GBgUfgnUaAQRT2OiqWnMf8\nTUqPPj/wcaoYoL1Rfb9S3Tv9ehe/1HKwG+CvxPo6NleZgwVciBMxlCJXcy15D7Sk\nwg+S/Vza476HPqX/FVIHymV2fS1EBvqm6S0F1NEWCQKBgQDjko9pE7D1Fo4C+5bh\n3pjWoUVn/AZYGFBuCzeG53E2Bh3XKbiZBoxIQSj30aI3Lw/3M62V8+EygkT1onfS\ng8LpchVzk7I3hKcyL2e8UjhhlaRdO6cJasbTk76dwA2dg9n6HC2biYbWP8rlCd7r\nrfsq1itCeRjXy24jlUhUa4EP7QKBgQC7lRH0lpRS/nFrpK9j/ZECdWMSfDnaPQJP\n3aThe5DsKjzOo5L9FpVBBt5YNiMndjm/Emq2ADKk6e0F4WMlRn4XsSJyNdQPRIgK\ncoXG37Gkif8pGU9qyTawRE8+frZxJbVcDWdFua1XXC1NAI0DZPb1S1N+dbMkm+tg\nTt5mwervKwKBgQDY1CzWNk/VxY67otGJFhlT7sb9o7C7wTbpEsDuRZilm8BU4Mik\n7Qs+UO9i6BeCMtIoe9G53WvFPz/LNuip6KcO3Ic53xDgOwE/HNHfKgvUVssLlim6\nHEWjE9N75KBUY2uOFckSuD+D5bZA8l22+sckcnk3VcBo48hmGPeYj/GhpQKBgQCl\nlUpbSMy3kkmWhrIYJs3piKuitqvu3Kn8zB9utz/PaN1yXuwyosuvsht1bJyNigwh\ngWVXMUeDUcdbyIBXeCl4SnGotaFytMENz9gNHItYPkRSCDiVf/bZlAMLnJj5uhqk\nnmRKJURBeGm4rkLL+0UQdKTIXad8KnKU+inSNV1oLwKBgQDHWEP+/S1Dh44v/82f\nPshqQLfRMMPXyMFbBchmNRlr9rCpVeT4iMaA095xOKtbklH83LhI4HQJgSu8CSDl\np9MmmXVsBo2fXLc1ih5BFTY6xSKu9Bk8WSzwlAaq3Q+YGNhOBHGaXXavR/8eN1sO\n/lOle+1rw9aDCxKo2LGWopSlTA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@badmintonposecorrection.iam.gserviceaccount.com",
+  "client_id": "105054379001503089500",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40badmintonposecorrection.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

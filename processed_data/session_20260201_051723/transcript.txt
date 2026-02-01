@@ -1,0 +1,23 @@
+=== Badminton Coaching Session Log ===
+Started: 2026-02-01 05:17:23
+
+[2026-02-01 05:17:31] Video Time: 1.53s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 05:17:31] Video Time: 1.57s
+  Shot: BACKHAND
+  Error: [X] KINETIC CHAIN COLLAPSED: Keep non-racket arm up
+  Advice: Keep practicing your form.
+
+[2026-02-01 05:17:38] Video Time: 2.17s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 05:17:38] Video Time: 2.20s
+  Shot: SMASH
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+

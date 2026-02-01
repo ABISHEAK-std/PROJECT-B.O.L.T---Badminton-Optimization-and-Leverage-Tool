@@ -1,0 +1,13 @@
+# --- BOLT: Core Vision & Tracking ---
+mediapipe>=0.10.0
+opencv-python>=4.8.0
+
+# --- Math & Data Processing ---
+numpy>=1.24.0
+matplotlib>=3.7.0
+
+# --- AI & Future Scaling ---
+#google-generativeai>=0.3.0
+
+# --- Utilities ---
+scipy>=1.10.0  # Required for advanced smoothing filters

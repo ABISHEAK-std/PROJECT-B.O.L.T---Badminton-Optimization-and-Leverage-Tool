@@ -71,7 +71,6 @@ class BoltMasterEngine:
         shoulder_x = current_data.get("shoulder_x", 0)
         elbow = current_data.get("elbow_angle", 0)
         
-        # === NEWBIE ERRORS ===
         if velocity < 0.02:
             alerts.append("[X] TELEGRAPHING: Match smash swing speed")
         if abs(forearm_rot_vel) < 100:
@@ -81,7 +80,6 @@ class BoltMasterEngine:
         if elbow > 175:
             alerts.append("[X] TOO STIFF: Soften elbow for control")
         
-        # === PRO POSTURE ===
         if shoulder_angle > 50 and body_rotation > 15:
             good_indicators.append("[OK] PERFECT DISGUISE: Looks like smash")
         if wrist_x > shoulder_x + 0.05:
@@ -112,7 +110,6 @@ class BoltMasterEngine:
         forearm_rot_vel = current_data.get("forearm_rot_velocity", 0)
         elbow = current_data.get("elbow_angle", 0)
         
-        # === NEWBIE ERRORS ===
         if shoulder < 30:
             alerts.append("[X] ELBOW TOO HIGH: Lower for better control")
         if knee > 160:
@@ -124,7 +121,6 @@ class BoltMasterEngine:
         if elbow < 140:
             alerts.append("[X] COLLAPSED ELBOW: Keep elbow extended")
         
-        # === PRO POSTURE ===
         if abs(forearm_rot_vel) > 200 and body_rotation < 10:
             good_indicators.append("[OK] PERFECT WRIST ACTION: Clean short serve")
         if knee < 150:
@@ -156,7 +152,6 @@ class BoltMasterEngine:
         shoulder_angle = current_data.get("shoulder_angle", 0)
         elbow = current_data.get("elbow_angle", 0)
         
-        # === NEWBIE ERRORS ===
         if wrist_x < shoulder_x - 0.1:
             alerts.append("[X] CONTACT TOO LATE: Hit in front of body")
         if body_rotation < 5 and abs(hip_rot_vel) < 20:
@@ -164,7 +159,6 @@ class BoltMasterEngine:
         if elbow < 150:
             alerts.append("[X] EXTEND ARM: Reach through contact")
         
-        # === PRO POSTURE ===
         if shoulder_angle > 50 and body_rotation > 10:
             good_indicators.append("[OK] PERFECT PREPARATION: Early racket up")
         if abs(hip_rot_vel) > 50:
@@ -195,35 +189,26 @@ class BoltMasterEngine:
         shoulder_x = current_data.get("shoulder_x", 0)
         knee = current_data.get("knee_angle", 0)
         
-        # === NEWBIE ERRORS ===
-        # 1. Facing the Net
+        
         if abs(body_rotation) < 30:
             alerts.append("[X] TURN YOUR BACK: Rotate shoulders away from net")
-        # 2. Elbow Tucked
         if elbow < 90 and abs(wrist_x - shoulder_x) < 0.1:
             alerts.append("[X] ELBOW TUCKED: Lead with high elbow")
-        # 3. Wrong Grip
         if forearm_rotation < 5:
             alerts.append("[X] THUMB UP: Press thumb on flat racket side")
-        # 4. No Cross-Body Reach
         if abs(wrist_x - shoulder_x) < 0.1:
             alerts.append("[X] REACH ACROSS: Extend cross-body")
         
-        # === PRO POSTURE ===
-        # 1. Perfect V-Shape
+        
         if 90 <= elbow <=  120 and forearm_rotation > 15:
             good_indicators.append("[OK] PERFECT V-SHAPE: Pro backhand form")
-        # 2. Lead Foot Lunge
         if knee < 120:
             good_indicators.append("[OK] EXCELLENT LUNGE: Good leg drive")
-        # 3. Strong Thumb Position
         if forearm_rotation > 20:
             good_indicators.append("[OK] PERFECT THUMB POSITION")
-        # 4. Cross-Body Extension
         if abs(wrist_x - shoulder_x) > 0.15:
             good_indicators.append("[OK] GREAT CROSS-BODY REACH")
         
-        # Priority
         if alerts:
             status = alerts[0]
         elif good_indicators:

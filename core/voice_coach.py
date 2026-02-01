@@ -54,7 +54,6 @@ class VoiceCoach:
                 except:
                     break
         
-        # Add to queue
         self.speech_queue.put(text)
     
     def speak_status(self, shot_label, status, alerts, good_indicators, score):
@@ -69,20 +68,15 @@ class VoiceCoach:
             score: Performance score
         """
         if shot_label == "IDLE":
-            # Don't spam during idle
             return
         
-        # Build speech message
         parts = []
         
-        # Announce shot
         parts.append(f"{shot_label} detected.")
         
-        # Score
         if score < 50:
             parts.append(f"Score: {score} out of 100.")
         
-        # Read alerts (max 2 to avoid overwhelming)
         if alerts:
             alert_text = alerts[0].replace("[X]", "").strip()
             parts.append(f"Alert: {alert_text}")
@@ -91,12 +85,10 @@ class VoiceCoach:
                 alert_text_2 = alerts[1].replace("[X]", "").strip()
                 parts.append(f"Also: {alert_text_2}")
         
-        # Read good indicators (max 1)
         elif good_indicators:
             good_text = good_indicators[0].replace("[OK]", "").strip()
             parts.append(f"Good form: {good_text}")
         
-        # Join and speak
         message = " ".join(parts)
         self.speak(message)
     

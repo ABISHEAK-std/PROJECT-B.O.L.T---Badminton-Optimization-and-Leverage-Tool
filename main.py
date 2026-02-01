@@ -2,21 +2,22 @@ import cv2
 import os
 import sys
 import signal
+import time
+import argparse
 
-# --- STEP 1: ROBUST PATH INJECTION ---
-# We force the absolute path of the project root into sys.path
-# This must happen BEFORE the local 'from core...' imports.
+
 project_root = os.path.dirname(os.path.abspath(__file__))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-# --- STEP 2: IMPORTS (Now safe) ---
 try:
     from core.vission_processor import BoltVisionProcessor
     from core.classifier import BoltActionClassifier
     from core.engine import BoltMasterEngine
     from core.coach_feedback import CoachFeedbackSystem
     from core.session_recorder import SessionRecorder
+    from core.firebase_sync import get_firebase_sync
+    from core.video_streamer import get_video_streamer
     from utils.geometry import BoltGeometry
     from config import BoltConfig as cfg
 except ImportError as e:
@@ -26,34 +27,43 @@ except ImportError as e:
     print(f"System Path: {sys.path[:3]}")
     sys.exit(1)
 
-def run_bolt_analyzer(video_source=0):
+def run_bolt_analyzer(video_source=0, user_height_cm=None):
     """
     Main execution loop for BOLT.
     video_source: 0 for webcam, or "path/to/video.mp4" for testing.
+    user_height_cm: User's height in cm (from profile), defaults to config value
     """
-    # Signal handler for Ctrl+C
+    # Use provided height or fall back to config
+    height = user_height_cm if user_height_cm else cfg.ATHLETE["HEIGHT_CM"]
+    
     def signal_handler(sig, frame_obj):
         print("\n\n⚠️  Ctrl+C detected - Archiving session...")
-        # Always try to archive, even if video recording failed
         if recorder.is_session_active():
             recorder.stop_and_archive()
+        # Get session folder AFTER archiving (video is now saved)
+        session_folder = recorder.get_session_folder() if hasattr(recorder, 'get_session_folder') else None
+        firebase.stop_session(session_folder)
+        streamer.stop()
         coach.cleanup()
         cap.release()
         cv2.destroyAllWindows()
         sys.exit(0)
     
-    # Initialize Core Modules
     vision = BoltVisionProcessor()
     classifier = BoltActionClassifier()
-    # Pull user height from config.py
-    engine = BoltMasterEngine(user_height_cm=cfg.ATHLETE["HEIGHT_CM"])
-    coach = CoachFeedbackSystem("corrections.json", "correct.txt")  # Initialize coach feedback
-    recorder = SessionRecorder("processed_data", fps=30.0)  # Initialize session recorder
+    engine = BoltMasterEngine(user_height_cm=height)
+    coach = CoachFeedbackSystem("corrections.json", "correct.txt")  
+    recorder = SessionRecorder("processed_data", fps=30.0)  
+    firebase = get_firebase_sync()
+    streamer = get_video_streamer(port=5001) 
     
-    # Register Ctrl+C handler (must be after recorder init)
     signal.signal(signal.SIGINT, signal_handler)
     
     cap = cv2.VideoCapture(video_source)
+    
+   
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, 1) 
+    cap.set(cv2.CAP_PROP_FPS, 60)  
     
     if not cap.isOpened():
         print(f"CRITICAL ERROR: Could not open source {video_source}")
@@ -63,13 +73,12 @@ def run_bolt_analyzer(video_source=0):
 
     print(f"--- BOLT SYSTEM ACTIVE ---")
     print(f"Mode: {'Webcam' if video_source == 0 else 'Video File'}")
-    print(f"Target Height: {cfg.ATHLETE['HEIGHT_CM']}cm")
+    print(f"User Height: {height}cm")
     
-    # Give webcam time to initialize and retry reading first frame
     import time
     first_frame = None
-    for attempt in range(10):  # Try 10 times
-        time.sleep(0.2)  # 200ms between attempts
+    for attempt in range(10):  
+        time.sleep(0.2)  
         ret, first_frame = cap.read()
         if ret:
             print(f"✅ Webcam initialized (attempt {attempt + 1})")
@@ -82,22 +91,24 @@ def run_bolt_analyzer(video_source=0):
         cap.release()
         return
     
-    # Start recording immediately
     height, width = first_frame.shape[:2]
     recorder.start_recording(width, height)
     
-    # Connect coach to session transcript for live logging
     transcript_path = recorder.get_transcript_path()
     if transcript_path:
         coach.set_transcript_path(transcript_path)
     
+    session_id = recorder.get_session_id() if hasattr(recorder, 'get_session_id') else f"session_{int(time.time())}"
+    firebase.start_session(session_id)
+    
+    # Start video streaming server for frontend
+    streamer.start()
+    
     print(f"📹 Session recording started (Resolution: {width}x{height})")
 
     frame_count = 0
-    is_start = True  # Toggle flag: True=START, False=END
-    prev_was_idle = False  # Track if previous frame was IDLE
-    
-    # Process first frame
+    is_start = True  
+    prev_was_idle = False 
     results, landmarks = vision.process_frame(first_frame)
     frame = first_frame
     
@@ -108,7 +119,6 @@ def run_bolt_analyzer(video_source=0):
 
         frame_count += 1
 
-        # A. Processing Phase (MediaPipe + Smoothing)
         results, landmarks = vision.process_frame(frame)
         
         status = "IDLE"
@@ -117,18 +127,16 @@ def run_bolt_analyzer(video_source=0):
         metrics = {}
 
         if landmarks:
-            # B. Prediction Phase (Classifier with enhanced biomechanics)
             shot_label, confidence, metrics = classifier.classify(landmarks, user_height_px=500)
             
-            # C. Correction Phase (Rule Engine)
-            # Use metrics from classifier (which already calculated angles)
+           
             current_data = {
                 'elbow_angle': metrics.get('elbow_angle', 0),
                 'shoulder_angle': metrics.get('shoulder_angle', 0),
                 'knee_angle': metrics.get('knee_angle', 0),
                 'body_rotation': metrics.get('body_rotation', 0),
-                'reach_cm': metrics.get('wrist_height', 0) * cfg.ATHLETE["HEIGHT_CM"],
-                'wrist_height_cm': metrics.get('wrist_height', 0) * cfg.ATHLETE["HEIGHT_CM"],
+                'reach_cm': metrics.get('wrist_height', 0) * height,
+                'wrist_height_cm': metrics.get('wrist_height', 0) * height,
                 'velocity': metrics.get('velocity', 0),
                 'forearm_rotation': metrics.get('forearm_rotation', 0),
                 'wrist_x': landmarks[16].x,
@@ -138,7 +146,6 @@ def run_bolt_analyzer(video_source=0):
                 'r_shoulder_z': landmarks[12].z
             }
 
-            # Map the prediction to the specific Rule Engine function
             analysis = {"alerts": [], "score": 100}
             if shot_label == "SMASH":
                 analysis = engine.evaluate_smash(current_data)
@@ -151,19 +158,15 @@ def run_bolt_analyzer(video_source=0):
             elif shot_label == "BACKHAND":
                 analysis = engine.evaluate_backhand(current_data)
 
-            #  Alert Handling
             alerts = analysis.get("alerts", [])
             good_indicators = analysis.get("good", [])
             status_msg = analysis.get("status", "")
             score = analysis.get("score", 0)
             
-            # Prioritize status field from analysis
             if shot_label == "IDLE":
                 status = "STANDING STILL"
                 
-                # Toggle START/END on IDLE detection (only once per IDLE sequence)
                 if not prev_was_idle:
-                    # ANSI Color codes
                     GREEN = "\033[92m"
                     RED = "\033[91m"
                     RESET = "\033[0m"
@@ -172,27 +175,28 @@ def run_bolt_analyzer(video_source=0):
                         print("\n" + "="*80)
                         print(f"{GREEN}START{RESET}")
                         print("="*80 + "\n")
-                        is_start = False  # Toggle to END for next time
+                        is_start = False  
                     else:
                         print("\n" + "="*80)
                         print(f"{RED}END{RESET}")
                         print("="*80 + "\n")
-                        is_start = True  # Toggle back to START
+                        is_start = True  
                     
                     prev_was_idle = True
             else:
-                # Non-IDLE state
                 if status_msg:
                     status = status_msg
                 else:
                     status = "ANALYZING"
-                prev_was_idle = False  # Reset when not idle
+                prev_was_idle = False  
             
-            # Coach feedback system (handles live voice + post-shot corrections)
             coach.update(shot_label, status, metrics.get('timestamp', 0))
+            
+            if frame_count % 5 == 0:
+                firebase.push_metrics(metrics, shot_label, confidence, score, frame_count)
+                if transcript_path:
+                    firebase.parse_and_push_transcript(transcript_path)
                 
-            # E. TERMINAL OUTPUT - Professional RAG Format (REDUCED FREQUENCY)
-            # Only print every 10 frames to reduce lag
             if frame_count % 10 == 0:
                 timestamp = metrics.get('timestamp', 0)
                 print(f"\n\nFRAME {frame_count} | TIME: {timestamp:.2f}s")
@@ -230,12 +234,10 @@ def run_bolt_analyzer(video_source=0):
                 print(f"    Body Rotation:    {metrics.get('body_rotation', 0):.1f}°")
                 print(f"{'-'*80}")
                 
-                # ANSI Color codes
                 RED = "\033[91m"
                 GREEN = "\033[92m"
                 RESET = "\033[0m"
                 
-                # Color the status
                 if status.startswith("[X]"):
                     colored_status = f"{RED}{status}{RESET}"
                 elif status.startswith("[OK]"):
@@ -246,26 +248,23 @@ def run_bolt_analyzer(video_source=0):
                 print(f"STATUS: {colored_status}")
                 print(f"SCORE:  {score}/100")
                 
-                # Print alerts
                 if alerts:
                     alert_str = ", ".join([f"{RED}{a}{RESET}" for a in alerts])
                     print(f"ALERTS: {alert_str}")
                 
-                # Print good form indicators
                 if good_indicators:
                     good_str = ", ".join([f"{GREEN}{g}{RESET}" for g in good_indicators])
                     print(f"GOOD FORM: {good_str}")
                 
                 print(f"{'='*80}\n")
 
-        # F. Rendering Phase
-        # Draw skeleton and HUD (vission_processor handles the HUD background)
         frame = vision.draw_visuals(frame, results, shot_label, status)
         
-        # Record annotated frame
         recorder.write_frame(frame)
         
-        # Add detailed angle display on video
+        # Stream frame to frontend
+        streamer.update_frame(frame)
+        
         if landmarks and cfg.UI.get("SHOW_ANGLES", True):
             y_offset = 110
             cv2.putText(frame, f"Elbow: {int(metrics.get('elbow_angle', 0))}deg", 
@@ -277,7 +276,6 @@ def run_bolt_analyzer(video_source=0):
 
         cv2.imshow('BOLT: Biomechanical Correction', frame)
 
-        # Controls: 'q' to quit, 's' to save screenshot, 'v' to toggle voice
         key = cv2.waitKey(1) & 0xFF
         if key == ord('q'):
             break
@@ -288,18 +286,26 @@ def run_bolt_analyzer(video_source=0):
             coach.toggle()
 
 
-    # Cleanup and Archive Session
+    session_folder = recorder.get_session_folder() if hasattr(recorder, 'get_session_folder') else None
     if recorder.is_session_active():
         recorder.stop_and_archive()
+    firebase.stop_session(session_folder)
+    streamer.stop()
     coach.cleanup()
     cap.release()
     cv2.destroyAllWindows()
     print("Shutting down...")
 
 if __name__ == "__main__":
-    # Use laptop camera (0) or video file path
-    USE_WEBCAM = True  # Set to False to use video file instead
-    VIDEO_PATH = r"E:\batminton dataset\multiple.mp4"
+    parser = argparse.ArgumentParser(description='BOLT - Badminton AI Coach')
+    parser.add_argument('--height', type=int, default=None, 
+                        help='User height in cm (e.g., --height 175)')
+    parser.add_argument('--video', type=str, default=None,
+                        help='Path to video file (default: webcam)')
+    args = parser.parse_args()
+    
+    USE_WEBCAM = args.video is None
+    VIDEO_PATH = args.video or r"E:\batminton dataset\multiple.mp4"
     
     if USE_WEBCAM:
         print("Starting live camera feed from laptop webcam...")
@@ -311,4 +317,4 @@ if __name__ == "__main__":
         print(f"Video file not found at: {VIDEO_PATH}\nFalling back to webcam (0).")
         video_source = 0
     
-    run_bolt_analyzer(video_source)
+    run_bolt_analyzer(video_source, user_height_cm=args.height)

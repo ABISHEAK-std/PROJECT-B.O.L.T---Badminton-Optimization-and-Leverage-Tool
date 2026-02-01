@@ -45,27 +45,21 @@ class BoltVisionProcessor:
             h, w, _ = frame.shape
             
             CONNECTIONS = [
-                (11, 12), (11, 23), (12, 24), (23, 24), # Torso
-                (11, 13), (13, 15), (12, 14), (14, 16), # Arms
-                (23, 25), (25, 27), (24, 26), (26, 28)  # Legs
+                (11, 12), (11, 23), (12, 24), (23, 24), 
+                (11, 13), (13, 15), (12, 14), (14, 16), 
+                (23, 25), (25, 27), (24, 26), (26, 28)  
             ]
 
-            # Draw lines
             for start_idx, end_idx in CONNECTIONS:
                 if start_idx < len(landmarks) and end_idx < len(landmarks):
                     pt1 = (int(landmarks[start_idx].x * w), int(landmarks[start_idx].y * h))
                     pt2 = (int(landmarks[end_idx].x * w), int(landmarks[end_idx].y * h))
                     cv2.line(frame, pt1, pt2, (255, 255, 255), 2)
             
-            # Draw points
             for lm in landmarks:
                 cx, cy = int(lm.x * w), int(lm.y * h)
                 cv2.circle(frame, (cx, cy), 4, (0, 255, 0), -1)
         
-        # 2. Draw HUD Background
-        cv2.rectangle(frame, (0, 0), (350, 120), (0, 0, 0), -1)
-        
-        # 3. Draw Text Info
         cv2.putText(frame, f"SHOT: {shot_type}", (10, 30), 
                     cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
         

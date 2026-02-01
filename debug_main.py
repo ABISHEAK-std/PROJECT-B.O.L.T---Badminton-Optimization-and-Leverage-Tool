@@ -62,7 +62,6 @@ def run_bolt_analyzer(video_source=0):
             break
         frame_count += 1
         
-        # Only process first frame for debug test
         if frame_count == 1:
             print("DEBUG: First frame read successfully")
             print("DEBUG: Processing frame...")

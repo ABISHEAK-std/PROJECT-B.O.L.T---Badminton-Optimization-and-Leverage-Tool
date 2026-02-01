@@ -1,0 +1,23 @@
+=== Badminton Coaching Session Log ===
+Started: 2026-02-01 11:09:12
+
+[2026-02-01 11:09:19] Video Time: 0.10s
+  Shot: SERVE
+  Error: [X] UNSTABLE STANCE: Bend knees, widen feet
+  Advice: Bend your knees and widen your feet to lower your center of gravity and provide a stable base for the service motion.
+
+[2026-02-01 11:09:23] Video Time: 0.23s
+  Shot: BACKHAND
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Keep practicing your form.
+
+[2026-02-01 11:09:36] Video Time: 0.73s
+  Shot: SERVE
+  Error: [X] SERVICE FAULT RISK: Contact below waist
+  Advice: Lower your contact point. The wrist height is currently above 120cm; contact must be made below the waist (waist-height) to be legal.
+
+[2026-02-01 11:09:36] Video Time: 0.77s
+  Shot: SERVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+

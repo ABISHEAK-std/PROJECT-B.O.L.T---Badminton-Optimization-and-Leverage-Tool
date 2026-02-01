@@ -1,46 +1,46 @@
-# ==========================================
-# BOLT CONFIGURATION: Biomechanical Standards
-# ==========================================
+
+
+
 
 class BoltConfig:
-    # --- 1. ATHLETE PROFILE ---
-    # These values normalize the coordinate system to the user's physique
+    
+    
     ATHLETE = {
-        "HEIGHT_CM": 178,          # Reference height for reach calculations
-        "ARM_SPAN_RATIO": 1.04,    # Average arm span vs height
-        "DOMINANT_HAND": "RIGHT"   # Used to select which side to analyze
+        "HEIGHT_CM": 178,          
+        "ARM_SPAN_RATIO": 1.04,    
+        "DOMINANT_HAND": "RIGHT"   
     }
 
-    # --- 2. BIOMECHANICAL RULEBASE ---
-    # Precise angle ranges and thresholds based on BWF coaching standards
+    
+    
     BIOMECHANICS = {
         "SMASH": {
-            "ELBOW_RANGE": (160, 180),           # Degrees at contact
-            "SHOULDER_RANGE": (85, 115),         # Shoulder abduction angle
-            "KNEE_BEND_RANGE": (20, 45),         # Knee flexion for power
-            "REACH_MULT": 1.3,                   # Must reach >1.3x height
-            "MIN_VELOCITY": 0.05,                # High wrist speed
-            "CONFIDENCE_THRESHOLD": 0.70,        # Minimum certainty
-            "BODY_ROTATION_MIN": 10              # Degrees shoulder-hip separation
+            "ELBOW_RANGE": (160, 180),           
+            "SHOULDER_RANGE": (85, 115),         
+            "KNEE_BEND_RANGE": (20, 45),         
+            "REACH_MULT": 1.3,                   
+            "MIN_VELOCITY": 0.05,               
+            "CONFIDENCE_THRESHOLD": 0.70,        
+            "BODY_ROTATION_MIN": 10              
         },
         "DROP": {
             "ELBOW_RANGE": (145, 175),
             "SHOULDER_RANGE": (90, 125),
             "KNEE_BEND_RANGE": (15, 40),
             "REACH_MULT": 1.15,
-            "VELOCITY_RANGE": (0.01, 0.035),     # Narrow controlled speed
-            "MAX_WRIST_SNAP": 250,               # Low wrist snap (°/s)
-            "DECELERATION_REQUIRED": True,       # Must slow down
+            "VELOCITY_RANGE": (0.01, 0.035),     
+            "MAX_WRIST_SNAP": 250,               
+            "DECELERATION_REQUIRED": True,      
             "CONFIDENCE_THRESHOLD": 0.70,
             "BODY_ROTATION_MIN": 8
         },
         "SERVE": {
             "ELBOW_RANGE": (135, 175),
-            "KNEE_ANGLE_MAX": 150,               # Must have knee bend
+            "KNEE_ANGLE_MAX": 150,               
             "KNEE_BEND_RANGE": (25, 65),
-            "MAX_CONTACT_HEIGHT": 0.50,          # Below mid-body
-            "MIN_UPWARD_VELOCITY": -0.01,        # Y decreasing = moving up
-            "BODY_STABILITY_MAX": 12,            # Low rotation required
+            "MAX_CONTACT_HEIGHT": 0.50,          
+            "MIN_UPWARD_VELOCITY": -0.01,        
+            "BODY_STABILITY_MAX": 12,            
             "MIN_STABILITY_FRAMES": 8,
             "CONFIDENCE_THRESHOLD": 0.75,
             "UPWARD_TRAJECTORY": True
@@ -56,17 +56,17 @@ class BoltConfig:
         "BACKHAND": {
             "ELBOW_RANGE": (130, 170),
             "SHOULDER_RANGE": (60, 105),
-            "CONTACT_HEIGHT_RANGE": (0.35, 0.75),  # Mid-body height
-            "CROSS_BODY_REQUIRED": True,           # Wrist crosses midline
-            "FOREARM_ROTATION_RANGE": (10, 90),    # Supinated (positive)
-            "BODY_ROTATION_RANGE": (5, 25),        # Moderate rotation
-            "SWING_PLANE_MAX": 35,                 # Relatively horizontal
-            "THUMB_LEADING": True,                 # Supination at contact
+            "CONTACT_HEIGHT_RANGE": (0.35, 0.75), 
+            "CROSS_BODY_REQUIRED": True,           
+            "FOREARM_ROTATION_RANGE": (10, 90),    
+            "BODY_ROTATION_RANGE": (5, 25),       
+            "SWING_PLANE_MAX": 35,                 
+            "THUMB_LEADING": True,                
             "CONFIDENCE_THRESHOLD": 0.68
         }
     }
     
-    # Legacy compatibility (kept for backward compatibility)
+    
     RULES = {
         "SMASH": {
             "MIN_ELBOW_ANGLE": 168.0,
@@ -85,28 +85,28 @@ class BoltConfig:
         }
     }
 
-    # --- 3. VISION & FILTER SETTINGS ---
-    # Controls the stability of the skeleton and UI feedback
+    
+    
     VISION = {
         "MIN_DETECTION_CONFIDENCE": 0.7,
         "MIN_TRACKING_CONFIDENCE": 0.7,
         "FILTER": {
-            "MIN_CUTOFF": 1.0,  # Lower = smoother standing still
-            "BETA": 0.007       # Higher = less lag during fast smashes
+            "MIN_CUTOFF": 1.0,  
+            "BETA": 0.007       
         }
     }
 
-    # --- 4. DISPLAY & HUD ---
-    # Aesthetics for the real-time feedback window
+    
+    
     UI = {
-        "THEME_COLOR": (0, 255, 0),    # BOLT Green (B, G, R)
-        "ALERT_COLOR": (0, 0, 255),    # Fault Red
+        "THEME_COLOR": (0, 255, 0),    
+        "ALERT_COLOR": (0, 0, 255),    
         "LINE_THICKNESS": 3,
         "SHOW_FPS": True,
-        "SHOW_ANGLES": True            # Toggle real-time angle overlays
+        "SHOW_ANGLES": True            
     }
 
-    # --- 5. DATA LOGGING ---
+    
     PATHS = {
         "LOG_FILE": "E:/rulebased_correction/data/session_log.csv",
         "CHART_OUTPUT": "E:/rulebased_correction/data/improvement_trend.png"

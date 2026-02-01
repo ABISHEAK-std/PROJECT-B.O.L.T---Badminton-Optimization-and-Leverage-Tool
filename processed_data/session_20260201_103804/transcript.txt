@@ -1,0 +1,23 @@
+=== Badminton Coaching Session Log ===
+Started: 2026-02-01 10:38:04
+
+[2026-02-01 10:38:10] Video Time: 0.10s
+  Shot: SERVE
+  Error: [X] ELBOW TOO HIGH: Lower for better control
+  Advice: Lower your racket arm shoulder angle (below 30°) to gain better control and a more consistent flight path.
+
+[2026-02-01 10:38:10] Video Time: 0.13s
+  Shot: SERVE
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 10:38:29] Video Time: 0.83s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 10:38:29] Video Time: 0.87s
+  Shot: SMASH
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+

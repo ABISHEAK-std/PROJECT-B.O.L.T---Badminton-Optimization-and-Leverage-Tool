@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 
 interface BenchmarkCardProps {
     label: string;
-    value: string; // e.g., "215"
-    eliteValue: string; // e.g., "220"
+    value: string; 
+    eliteValue: string; 
     unit?: string;
     max?: number;
 }
@@ -12,8 +12,7 @@ export function BenchmarkCard({ label, value, eliteValue, unit, max = 100 }: Ben
     const valNum = parseFloat(value);
     const eliteNum = parseFloat(eliteValue);
 
-    // Simple calc for bar width relative to max (or elite value if we assume elite is near max)
-    // If max is not provided, we can assume eliteValue is the goal/max roughly
+    
     const barMax = max > eliteNum ? max : eliteNum * 1.2;
 
     const valPercent = (valNum / barMax) * 100;

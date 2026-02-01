@@ -2,14 +2,25 @@ import { AthleteRadarChart } from '../components/stats/AthleteRadarChart';
 import { QuickStatCard } from '../components/stats/QuickStatCard';
 import { TrendChart } from '../components/stats/TrendChart';
 import { BenchmarkCard } from '../components/stats/BenchmarkCard';
-import { BarChart2, Zap, Activity, Dumbbell, Target } from 'lucide-react';
-
-const TREND_DATA_1 = [65, 59, 80, 81, 56, 55, 40, 70, 60, 75, 80, 90];
-const TREND_DATA_2 = [60, 65, 60, 70, 75, 80, 85, 80, 75, 70, 75, 80];
-const TREND_DATA_3 = [40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95];
-const TREND_DATA_4 = [80, 75, 70, 75, 80, 85, 80, 75, 80, 85, 90, 92];
+import { BarChart2, Zap, Activity, Dumbbell, Target, Loader2 } from 'lucide-react';
+import { useSessionStats } from '../hooks/useLiveData';
 
 export default function Stats() {
+    const { stats, loading } = useSessionStats();
+    
+    // Generate trend data from recent scores, padded to 12 values
+    const scoreTrendData = stats.recentScores.length > 0 
+        ? [...stats.recentScores, ...Array(Math.max(0, 12 - stats.recentScores.length)).fill(0)].slice(0, 12)
+        : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    
+    if (loading) {
+        return (
+            <div className="flex items-center justify-center h-64">
+                <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+        );
+    }
+    
     return (
         <div className="flex flex-col gap-6 pb-10">
             <div className="mb-4">
@@ -23,7 +34,12 @@ export default function Stats() {
                 <div className="col-span-12 lg:col-span-8 glass-panel rounded-2xl p-6 min-h-[400px] flex flex-col">
                     <h2 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-6">Athlete Skill Profile</h2>
                     <div className="flex-1 flex items-center justify-center">
-                        <AthleteRadarChart />
+                        <AthleteRadarChart 
+                            avgElbowAngle={stats.avgElbowAngle}
+                            avgShoulderAngle={stats.avgShoulderAngle}
+                            avgKneeAngle={stats.avgKneeAngle}
+                            avgScore={stats.avgScore}
+                        />
                     </div>
                 </div>
 
@@ -31,42 +47,140 @@ export default function Stats() {
                     <div className="glass-panel p-4 rounded-xl mb-2">
                         <h2 className="text-gray-400 text-xs font-semibold uppercase tracking-wider">Quick Stats</h2>
                     </div>
-                    <QuickStatCard icon={BarChart2} label="Total Sessions" value="124" trend="+15% vs last month" index={0} />
-                    <QuickStatCard icon={Zap} label="Avg. BOLT Score" value="84.2" trend="+7.1 pts vs last month" index={1} />
-                    <QuickStatCard icon={Activity} label="Peak Smash Speed" value="223 km/h" trend="New personal best" index={2} />
-                    <QuickStatCard icon={Dumbbell} label="Hours Trained" value="38.5" trend="+7 hrs vs last month" index={3} />
-                    <QuickStatCard icon={Target} label="Shots Analyzed" value="14,580" trend="+1,700 vs last month" index={4} />
+                    <QuickStatCard 
+                        icon={BarChart2} 
+                        label="Total Sessions" 
+                        value={stats.totalSessions.toString()} 
+                        trend={stats.totalSessions > 0 ? `${stats.totalSessions} sessions recorded` : 'No sessions yet'} 
+                        index={0} 
+                    />
+                    <QuickStatCard 
+                        icon={Zap} 
+                        label="Avg. BOLT Score" 
+                        value={stats.avgScore > 0 ? stats.avgScore.toString() : '--'} 
+                        trend={stats.avgScore > 0 ? `Based on ${stats.totalSessions} sessions` : 'No score data yet'} 
+                        index={1} 
+                    />
+                    <QuickStatCard 
+                        icon={Activity} 
+                        label="Total Insights" 
+                        value={stats.totalInsights.toString()} 
+                        trend={stats.totalInsights > 0 ? `Coaching feedback provided` : 'No insights yet'} 
+                        index={2} 
+                    />
+                    <QuickStatCard 
+                        icon={Dumbbell} 
+                        label="Time Trained" 
+                        value={stats.totalDurationMinutes > 60 
+                            ? `${Math.round(stats.totalDurationMinutes / 60 * 10) / 10}h` 
+                            : `${Math.round(stats.totalDurationMinutes)}m`} 
+                        trend={stats.totalDurationMinutes > 0 ? 'Total training time' : 'No sessions yet'} 
+                        index={3} 
+                    />
+                    <QuickStatCard 
+                        icon={Target} 
+                        label="Shot Types" 
+                        value={Object.keys(stats.shotDistribution).length.toString()} 
+                        trend={Object.keys(stats.shotDistribution).length > 0 
+                            ? Object.entries(stats.shotDistribution)
+                                .sort((a, b) => b[1] - a[1])
+                                .slice(0, 2)
+                                .map(([k, v]) => `${k}: ${v}`)
+                                .join(', ') 
+                            : 'No shots recorded'} 
+                        index={4} 
+                    />
                 </div>
 
-                {/* Middle Row: Trend Sparklines */}
-                {[
-                    { label: 'Power Trend (Last 30 Days)', data: TREND_DATA_1 },
-                    { label: 'Accuracy Trend (Last 30 Days)', data: TREND_DATA_2 },
-                    { label: 'Footwork Trend (Last 30 Days)', data: TREND_DATA_3 },
-                    { label: 'Consistency Trend (Last 30 Days)', data: TREND_DATA_4 },
-                ].map((item, idx) => (
-                    <div key={idx} className="col-span-12 md:col-span-6 lg:col-span-3 glass-panel p-5 rounded-xl">
-                        <h3 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4">{item.label}</h3>
-                        <TrendChart data={item.data} color={idx % 2 === 0 ? '#DFFF00' : '#4ADE80'} />
-                    </div>
-                ))}
+                {/* Middle Row: Dynamic Stats */}
+                <div className="col-span-12 md:col-span-6 lg:col-span-3 glass-panel p-5 rounded-xl">
+                    <h3 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4">BOLT Score Trend</h3>
+                    <TrendChart data={scoreTrendData} color="#DFFF00" />
+                    <p className="text-xs text-gray-500 mt-2">Last {Math.min(12, stats.totalSessions)} sessions</p>
+                </div>
+                <div className="col-span-12 md:col-span-6 lg:col-span-3 glass-panel p-5 rounded-xl">
+                    <h3 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4">Elbow Angle Avg</h3>
+                    <div className="text-4xl font-bold font-mono text-primary">{stats.avgElbowAngle > 0 ? `${stats.avgElbowAngle}°` : '--'}</div>
+                    <p className="text-xs text-gray-500 mt-2">Target: 140-170° for smash</p>
+                </div>
+                <div className="col-span-12 md:col-span-6 lg:col-span-3 glass-panel p-5 rounded-xl">
+                    <h3 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4">Shoulder Angle Avg</h3>
+                    <div className="text-4xl font-bold font-mono text-green-400">{stats.avgShoulderAngle > 0 ? `${stats.avgShoulderAngle}°` : '--'}</div>
+                    <p className="text-xs text-gray-500 mt-2">Target: 120-180° for power</p>
+                </div>
+                <div className="col-span-12 md:col-span-6 lg:col-span-3 glass-panel p-5 rounded-xl">
+                    <h3 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4">Knee Angle Avg</h3>
+                    <div className="text-4xl font-bold font-mono text-blue-400">{stats.avgKneeAngle > 0 ? `${stats.avgKneeAngle}°` : '--'}</div>
+                    <p className="text-xs text-gray-500 mt-2">Target: 90-120° for stability</p>
+                </div>
 
-                {/* Bottom Row: Pro Benchmark Comparison */}
+                {/* Bottom Row: Shot Distribution */}
                 <div className="col-span-12 glass-panel rounded-2xl p-6">
-                    <h2 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-6">Pro Benchmark Comparison</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <BenchmarkCard label="Serve Power" unit="km/h" value="215" eliteValue="220" max={250} />
-                        <BenchmarkCard label="Smash Accuracy" unit="%" value="88" eliteValue="92" max={100} />
-                        <BenchmarkCard label="Net Play Wins" unit="%" value="75" eliteValue="70" max={100} />
-                        <BenchmarkCard label="Drop Shot Success" unit="%" value="68" eliteValue="75" max={100} />
-
-                        {/* Second Row of benchmarks if needed, or just 4 as per image space, image has 4 cards visible clearly, maybe more */}
-                        <BenchmarkCard label="Clear Depth" unit="%" value="95" eliteValue="98" max={100} />
-                        <BenchmarkCard label="Footwork Speed" unit="m/s" value="3.2" eliteValue="3.5" max={5} />
-                        <BenchmarkCard label="Reaction Time" unit="s" value="0.18" eliteValue="0.15" max={0.5} />
-                        <BenchmarkCard label="Consistency Score" unit="" value="89" eliteValue="94" max={100} />
-                    </div>
+                    <h2 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-6">Shot Type Distribution</h2>
+                    {Object.keys(stats.shotDistribution).length > 0 ? (
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                            {Object.entries(stats.shotDistribution)
+                                .sort((a, b) => b[1] - a[1])
+                                .map(([shot, count]) => (
+                                    <div key={shot} className="bg-white/5 rounded-xl p-4 text-center">
+                                        <div className={`text-2xl font-bold font-mono ${
+                                            shot === 'SMASH' ? 'text-red-400' :
+                                            shot === 'SERVE' ? 'text-blue-400' :
+                                            shot === 'DROP' ? 'text-purple-400' :
+                                            shot === 'BACKHAND' ? 'text-orange-400' :
+                                            shot === 'FOREHAND_DRIVE' ? 'text-green-400' :
+                                            'text-gray-300'
+                                        }`}>
+                                            {count}
+                                        </div>
+                                        <p className="text-xs text-gray-400 mt-1 uppercase">{shot.replace('_', ' ')}</p>
+                                    </div>
+                                ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-8 text-gray-500">
+                            <p>No shot data available yet</p>
+                            <p className="text-xs mt-1">Complete a session to see shot distribution</p>
+                        </div>
+                    )}
                 </div>
+                
+                {/* Form Benchmarks */}
+                {stats.totalSessions > 0 && (
+                    <div className="col-span-12 glass-panel rounded-2xl p-6">
+                        <h2 className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-6">Form Benchmarks (Based on Your Sessions)</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <BenchmarkCard 
+                                label="Elbow Extension" 
+                                unit="°" 
+                                value={stats.avgElbowAngle.toString()} 
+                                eliteValue="165" 
+                                max={180} 
+                            />
+                            <BenchmarkCard 
+                                label="Shoulder Lift" 
+                                unit="°" 
+                                value={stats.avgShoulderAngle.toString()} 
+                                eliteValue="150" 
+                                max={180} 
+                            />
+                            <BenchmarkCard 
+                                label="Knee Bend" 
+                                unit="°" 
+                                value={stats.avgKneeAngle.toString()} 
+                                eliteValue="110" 
+                                max={180} 
+                            />
+                            <BenchmarkCard 
+                                label="Average Score" 
+                                unit="" 
+                                value={stats.avgScore.toString()} 
+                                eliteValue="85" 
+                                max={100} 
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

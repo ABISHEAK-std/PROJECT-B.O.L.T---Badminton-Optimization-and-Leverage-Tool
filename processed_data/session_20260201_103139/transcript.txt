@@ -1,0 +1,28 @@
+=== Badminton Coaching Session Log ===
+Started: 2026-02-01 10:31:39
+
+[2026-02-01 10:31:46] Video Time: 0.07s
+  Shot: BACKHAND
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 10:31:51] Video Time: 0.17s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 10:31:51] Video Time: 0.23s
+  Shot: BACKHAND
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Keep practicing your form.
+
+[2026-02-01 10:32:08] Video Time: 0.77s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+
+[2026-02-01 10:32:08] Video Time: 0.80s
+  Shot: SMASH
+  Error: [X] LOW ELBOW: Raise racket arm to shoulder level
+  Advice: Raise racket arm to shoulder level. Your shoulder angle is currently below 120°, which limits power and creates a 'T-Rex arm' swing.
+

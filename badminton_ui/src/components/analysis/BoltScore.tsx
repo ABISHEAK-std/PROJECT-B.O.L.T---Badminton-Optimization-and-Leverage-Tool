@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 export function BoltScore({ score }: { score: number }) {
-    const circumference = 2 * Math.PI * 120; // 120 is radius
+    const circumference = 2 * Math.PI * 120; 
     const strokeDashoffset = circumference - (score / 100) * circumference;
 
     return (

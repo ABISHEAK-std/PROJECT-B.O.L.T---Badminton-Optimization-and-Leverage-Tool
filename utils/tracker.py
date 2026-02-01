@@ -33,7 +33,6 @@ class BoltPerformanceTracker:
         
         self.history.append(entry)
         
-        # Write to local disk immediately to prevent data loss
         with open(self.log_path, mode='a', newline='') as file:
             writer = csv.writer(file)
             writer.writerow([timestamp, shot_type, score, faults_str])

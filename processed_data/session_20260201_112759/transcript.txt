@@ -1,0 +1,43 @@
+=== Badminton Coaching Session Log ===
+Started: 2026-02-01 11:27:59
+
+[2026-02-01 11:28:07] Video Time: 0.10s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 11:28:08] Video Time: 0.17s
+  Shot: FOREHAND_DRIVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 11:28:31] Video Time: 0.80s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 11:28:32] Video Time: 0.83s
+  Shot: BACKHAND
+  Error: [X] EXTEND ARM: Reach through contact
+  Advice: Keep practicing your form.
+
+[2026-02-01 11:28:55] Video Time: 1.33s
+  Shot: FOREHAND_DRIVE
+  Error: [X] EXTEND ARM: Reach through contact
+  Advice: Keep practicing your form.
+
+[2026-02-01 11:28:55] Video Time: 1.37s
+  Shot: FOREHAND_DRIVE
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Keep practicing your form.
+
+[2026-02-01 11:29:09] Video Time: 1.87s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+
+[2026-02-01 11:29:09] Video Time: 1.90s
+  Shot: BACKHAND
+  Error: [X] TURN YOUR BACK: Rotate shoulders away from net
+  Advice: Rotate your shoulders away from the net (at least 30°). Facing the net prevents you from generating the necessary torque for a backhand.
+

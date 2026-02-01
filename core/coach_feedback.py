@@ -110,7 +110,6 @@ class CoachFeedbackSystem:
             return
         
         if priority:
-            # Clear queue for urgent messages
             while not self.speech_queue.empty():
                 try:
                     self.speech_queue.get_nowait()
@@ -124,10 +123,8 @@ class CoachFeedbackSystem:
         if not status_string:
             return ""
         
-        # Remove [X] or [OK] prefix
         clean = status_string.replace("[X]", "").replace("[OK]", "").strip()
         
-        # Extract just the key before the colon
         if ":" in clean:
             clean = clean.split(":")[0].strip()
         
@@ -135,7 +132,6 @@ class CoachFeedbackSystem:
     
     def _get_correction(self, pose, status):
         """Lookup detailed correction from JSON"""
-        # Map pose to JSON key
         pose_key_map = {
             "SMASH": "smash",
             "DROP": "drop_shot",
@@ -173,42 +169,32 @@ class CoachFeedbackSystem:
         """
         current_time = time.time()
         
-        # Detect pose transition
         pose_changed = (pose != self.previous_pose)
         
-        # === LIVE VOICE FEEDBACK ===
-        # Speak current status repeatedly while it persists
+        
         if status and status != "STANDING STILL" and status != "ANALYZING":
             if status != self.current_status or (current_time - self.last_speak_time) >= self.speak_cooldown:
-                # Extract short announcement
                 clean_status = self._clean_status(status)
                 if clean_status:
                     self._speak(clean_status)
                     self.last_speak_time = current_time
         
-        # === POST-SHOT CORRECTION ===
-        # When pose changes, give detailed feedback on the previous pose
+       
         if pose_changed and self.previous_pose not in ["IDLE", "PREPARATION", "NONE"]:
-            # Use the last error status from the previous pose
             if self.last_error_status and "[X]" in self.last_error_status:
-                # Get detailed correction
                 correction = self._get_correction(self.previous_pose, self.last_error_status)
                 
-                # Speak detailed correction
                 self._speak(correction, priority=True)
                 
-                # Log to file
                 self._log_correction(self.previous_pose, self.last_error_status, correction, video_time)
             
             elif self.last_error_status and "[OK]" in self.last_error_status:
-                # Good form - log success
                 timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
                 with open(self.log_path, 'a') as f:
                     f.write(f"[{timestamp}] Video Time: {video_time:.2f}s\n")
                     f.write(f"  Shot: {self.previous_pose}\n")
                     f.write(f"  Status: SUCCESS - {self.last_error_status}\n\n")
         
-        # Update state
         if status and "[X]" in status:
             self.last_error_status = status
         elif status and "[OK]" in status:

@@ -1,138 +1,192 @@
-import { useRef, useState, useEffect } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { Maximize, Video, VideoOff, RefreshCw } from 'lucide-react';
+import { useSessionStatus } from '../../hooks/useLiveData';
+
+const STREAM_URL = 'http://localhost:5001/video_feed';
+const HEALTH_URL = 'http://localhost:5001/health';
 
 export function VideoCanvas() {
-    const videoRef = useRef<HTMLVideoElement>(null);
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [isMuted, setIsMuted] = useState(false);
-    const [progress] = useState(30); // Mock progress
+    const { status } = useSessionStatus();
+    const imgRef = useRef<HTMLImageElement>(null);
+    const [streamError, setStreamError] = useState(false);
+    const [streamLoading, setStreamLoading] = useState(true);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const containerRef = useRef<HTMLDivElement>(null);
 
-    // Mock skeletal overlay drawing
+    // Check if stream is available
     useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        // Resize canvas to match video (mocking size for now since video might not load)
-        canvas.width = canvas.parentElement?.clientWidth || 800;
-        canvas.height = canvas.parentElement?.clientHeight || 450;
-
-        // Draw some mock skeletal lines
-        const drawMockSkeleton = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.strokeStyle = '#DFFF00';
-            ctx.lineWidth = 3;
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#DFFF00';
-
-            // Mock stick figure
-            ctx.beginPath();
-            const w = canvas.width;
-            const h = canvas.height;
-            ctx.moveTo(w * 0.4, h * 0.8); // Left foot
-            ctx.lineTo(w * 0.45, h * 0.6); // Left knee
-            ctx.lineTo(w * 0.5, h * 0.5); // Hips
-            ctx.lineTo(w * 0.55, h * 0.6); // Right knee
-            ctx.lineTo(w * 0.6, h * 0.8); // Right foot
-
-            ctx.moveTo(w * 0.5, h * 0.5); // Hips
-            ctx.lineTo(w * 0.5, h * 0.3); // Spine top
-
-            ctx.lineTo(w * 0.4, h * 0.35); // Left elbow
-            ctx.lineTo(w * 0.35, h * 0.2); // Left hand (racket)
-
-            ctx.moveTo(w * 0.5, h * 0.3); // Spine top
-            ctx.lineTo(w * 0.6, h * 0.35); // Right elbow
-            ctx.lineTo(w * 0.65, h * 0.45); // Right hand view
-
-            ctx.stroke();
-
-            // Racket mock
-            ctx.beginPath();
-            ctx.strokeStyle = 'cyan';
-            ctx.arc(w * 0.35, h * 0.15, 30, 0, Math.PI * 2);
-            ctx.stroke();
+        const checkStream = async () => {
+            if (!status.isActive) {
+                setStreamLoading(false);
+                return;
+            }
+            
+            try {
+                const response = await fetch(HEALTH_URL, { 
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                if (response.ok) {
+                    setStreamError(false);
+                    setStreamLoading(false);
+                } else {
+                    setStreamError(true);
+                    setStreamLoading(false);
+                }
+            } catch {
+                // Stream server not ready yet, will retry
+                setStreamLoading(true);
+            }
         };
 
-        // Animation loop (flicker effect)
-        let animationId: number;
-        const render = () => {
-            drawMockSkeleton();
-            animationId = requestAnimationFrame(render);
-        };
-        render();
+        // Check immediately and then every 2 seconds
+        checkStream();
+        const interval = setInterval(checkStream, 2000);
+        
+        return () => clearInterval(interval);
+    }, [status.isActive]);
 
-        return () => cancelAnimationFrame(animationId);
+    // Handle fullscreen
+    const toggleFullscreen = () => {
+        if (!containerRef.current) return;
+        
+        if (!isFullscreen) {
+            if (containerRef.current.requestFullscreen) {
+                containerRef.current.requestFullscreen();
+            }
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            }
+        }
+        setIsFullscreen(!isFullscreen);
+    };
+
+    // Listen for fullscreen changes
+    useEffect(() => {
+        const handleFullscreenChange = () => {
+            setIsFullscreen(!!document.fullscreenElement);
+        };
+        
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        return () => document.removeEventListener('fullscreenchange', handleFullscreenChange);
     }, []);
 
     return (
-        <div className="relative w-full h-full bg-black rounded-2xl overflow-hidden border border-white/10 shadow-2xl group">
-            {/* Video Element */}
-            <video
-                ref={videoRef}
-                className="w-full h-full object-cover opacity-80"
-                src="https://assets.mixkit.co/videos/preview/mixkit-playing-badminton-4028-large.mp4"
-                loop
-                muted={isMuted}
-                poster="https://images.pexels.com/photos/3660204/pexels-photo-3660204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            // Using Pexels badminton image as poster fallback
-            />
-
-            {/* Overlay Canvas */}
-            <canvas
-                ref={canvasRef}
-                className="absolute top-0 left-0 w-full h-full pointer-events-none"
-            />
-
-            {/* Controls Overlay (appears on hover) */}
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-6 flex flex-col gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-
-                {/* Progress Bar */}
-                <div className="w-full h-1.5 bg-white/20 rounded-full cursor-pointer relative overflow-hidden">
-                    <motion.div
-                        className="h-full bg-primary"
-                        initial={{ width: '0%' }}
-                        animate={{ width: `${progress}%` }}
-                    />
-                    <div className="absolute top-1/2 -translate-y-1/2 bg-white w-3 h-3 rounded-full shadow-lg pointer-events-none" style={{ left: `${progress}%` }} />
-                </div>
-
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => {
-                                const v = videoRef.current;
-                                if (v) {
-                                    if (v.paused) { v.play(); setIsPlaying(true); }
-                                    else { v.pause(); setIsPlaying(false); }
-                                }
+        <div 
+            ref={containerRef}
+            className="relative w-full h-full bg-black rounded-2xl overflow-hidden border border-white/10 shadow-2xl group"
+        >
+            {status.isActive ? (
+                // Live Stream View
+                <>
+                    {streamLoading && (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 z-10">
+                            <RefreshCw className="w-12 h-12 text-primary animate-spin mb-4" />
+                            <p className="text-gray-400 text-sm">Connecting to live stream...</p>
+                        </div>
+                    )}
+                    
+                    {streamError ? (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90">
+                            <VideoOff size={64} className="text-red-500/50 mb-4" />
+                            <p className="text-gray-400 text-lg">Stream Unavailable</p>
+                            <p className="text-gray-500 text-sm mt-2">Make sure the BOLT analyzer is running</p>
+                            <button 
+                                onClick={() => {
+                                    setStreamError(false);
+                                    setStreamLoading(true);
+                                }}
+                                className="mt-4 px-4 py-2 bg-primary/20 text-primary rounded-lg hover:bg-primary/30 transition-colors"
+                            >
+                                Retry Connection
+                            </button>
+                        </div>
+                    ) : (
+                        <img
+                            ref={imgRef}
+                            src={STREAM_URL}
+                            alt="Live BOLT Analysis"
+                            className="w-full h-full object-contain"
+                            onLoad={() => setStreamLoading(false)}
+                            onError={() => {
+                                setStreamError(true);
+                                setStreamLoading(false);
                             }}
-                            className="text-primary hover:text-white transition-colors"
-                        >
-                            {isPlaying ? <Pause fill="currentColor" /> : <Play fill="currentColor" />}
-                        </button>
-                        <span className="text-xs font-mono text-gray-300">2:00 / 5:00</span>
+                        />
+                    )}
+                    
+                    {/* Live Badge */}
+                    <div className="absolute top-4 left-4 flex items-center gap-2 bg-red-600/90 text-white px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider">
+                        <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                        LIVE
                     </div>
-
-                    <div className="flex items-center gap-4 text-gray-300">
-                        <button onClick={() => setIsMuted(!isMuted)}>
-                            {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
-                        </button>
-                        <Maximize size={20} className="hover:text-white cursor-pointer" />
+                    
+                    {/* Session Info */}
+                    <div className="absolute top-4 right-4 bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-lg text-xs font-mono">
+                        Session: {status.sessionId?.replace('session_', '#') || 'Active'}
                     </div>
-                </div>
-            </div>
-
-            {/* Play Overlay if paused */}
-            {!isPlaying && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                    <div className="w-16 h-16 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center border border-white/10">
-                        <Play size={32} className="ml-1 text-primary" fill="currentColor" />
+                    
+                    {/* Controls */}
+                    <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/90 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <Video size={20} className="text-green-400" />
+                                <span className="text-xs font-mono text-gray-300">
+                                    Frame: {status.currentFrame || 0}
+                                </span>
+                            </div>
+                            <button 
+                                onClick={toggleFullscreen}
+                                className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                            >
+                                <Maximize size={20} className="text-gray-300 hover:text-white" />
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </>
+            ) : (
+                // No Active Session - Show placeholder
+                <>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-gray-900 to-black">
+                        <div className="relative">
+                            {/* Animated rings */}
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-32 h-32 rounded-full border-2 border-primary/20 animate-ping" style={{ animationDuration: '2s' }}></div>
+                            </div>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                                <div className="w-24 h-24 rounded-full border border-primary/30 animate-pulse"></div>
+                            </div>
+                            
+                            <div className="relative w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center border border-primary/50">
+                                <Video size={36} className="text-primary" />
+                            </div>
+                        </div>
+                        
+                        <h3 className="text-xl font-bold text-white mt-8 mb-2">No Active Session</h3>
+                        <p className="text-gray-500 text-sm text-center max-w-xs">
+                            Start the BOLT analyzer to see live video feed with pose detection overlay
+                        </p>
+                        
+                        <div className="mt-6 flex items-center gap-2 text-xs text-gray-600 bg-white/5 px-4 py-2 rounded-full">
+                            <code className="text-primary">python main.py</code>
+                            <span>to start</span>
+                        </div>
+                    </div>
+                    
+                    {/* Decorative skeleton overlay */}
+                    <svg className="absolute inset-0 w-full h-full opacity-5 pointer-events-none" viewBox="0 0 400 300">
+                        <g stroke="#DFFF00" strokeWidth="2" fill="none">
+                            {/* Simple stick figure */}
+                            <circle cx="200" cy="50" r="20" />
+                            <line x1="200" y1="70" x2="200" y2="150" />
+                            <line x1="200" y1="90" x2="150" y2="130" />
+                            <line x1="200" y1="90" x2="250" y2="130" />
+                            <line x1="200" y1="150" x2="160" y2="250" />
+                            <line x1="200" y1="150" x2="240" y2="250" />
+                        </g>
+                    </svg>
+                </>
             )}
         </div>
     );

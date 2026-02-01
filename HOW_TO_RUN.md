@@ -1,43 +1,47 @@
 # How to Run the Real-Time Badminton Analysis System
 
 ## Prerequisites
-✅ Frontend already running on port 5173 (npm run dev)
+✅ Frontend already running (npm run dev)
 ✅ All dependencies installed
+✅ Google account for authentication
 
-## Step-by-Step Instructions
+## Quick Start
 
-### Option 1: Simple Run (Recommended)
-
-**Just run this command:**
-```bash
-python main_with_websocket.py
-```
-
-**Then open your browser:**
-```
-http://localhost:5173
-```
-
-That's it! You should see the live dashboard.
-
----
-
-### Option 2: Step-by-Step (If you want to understand)
-
-**Terminal 1 - Frontend (Already Running):**
+### 1. Start the Frontend
 ```bash
 cd badminton_ui
 npm run dev
 ```
-Leave this running. You already have this!
 
-**Terminal 2 - Backend:**
+### 2. Sign In (First Time)
+1. Open browser: `http://localhost:5173`
+2. Click "Continue with Google"
+3. Enter your height when prompted
+4. Select your skill level
+
+### 3. Start the Backend
 ```bash
-python main_with_websocket.py
+# Use height from your profile
+python main.py --height YOUR_HEIGHT_CM
+
+# Example for 175cm tall user:
+python main.py --height 175
 ```
 
-**Browser:**
-Open `http://localhost:5173`
+---
+
+## Command Line Options
+
+```bash
+# Basic usage with custom height
+python main.py --height 175
+
+# Using a video file instead of webcam
+python main.py --height 175 --video "path/to/video.mp4"
+
+# Default (uses config height, webcam)
+python main.py
+```
 
 ---
 
@@ -45,9 +49,10 @@ Open `http://localhost:5173`
 
 ### Terminal Output:
 ```
-🚀 Starting WebSocket server...
-================================================================================
-🎾 BOLT SYSTEM WITH LIVE FRONTEND
+🚀 Starting Video Streamer on port 5001...
+--- BOLT SYSTEM ACTIVE ---
+Mode: Webcam
+User Height: 175cm
 ================================================================================
 📱 Frontend: http://localhost:5173
 🔌 WebSocket: ws://localhost:8000

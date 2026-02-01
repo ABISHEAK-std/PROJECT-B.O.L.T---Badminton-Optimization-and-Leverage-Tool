@@ -1,14 +1,60 @@
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
-const data = [
-    { subject: 'Power', A: 120, B: 110, fullMark: 150 },
-    { subject: 'Consistency', A: 98, B: 130, fullMark: 150 },
-    { subject: 'Accuracy', A: 86, B: 130, fullMark: 150 },
-    { subject: 'Footwork', A: 99, B: 100, fullMark: 150 },
-    { subject: 'Endurance', A: 85, B: 90, fullMark: 150 },
-];
+interface AthleteRadarChartProps {
+    avgElbowAngle?: number;
+    avgShoulderAngle?: number;
+    avgKneeAngle?: number;
+    avgScore?: number;
+}
 
-export function AthleteRadarChart() {
+export function AthleteRadarChart({ 
+    avgElbowAngle = 0, 
+    avgShoulderAngle = 0, 
+    avgKneeAngle = 0,
+    avgScore = 0 
+}: AthleteRadarChartProps) {
+    // Normalize values to a 0-150 scale for the radar chart
+    const normalizeAngle = (angle: number, target: number) => {
+        if (angle === 0) return 0;
+        // Score based on how close to target (closer = better)
+        const diff = Math.abs(angle - target);
+        const maxDiff = 90; // Max deviation
+        return Math.max(0, Math.min(150, 150 - (diff / maxDiff * 150)));
+    };
+    
+    const data = [
+        { 
+            subject: 'Elbow Form', 
+            A: normalizeAngle(avgElbowAngle, 155), // Target ~155° for smash
+            B: 130, 
+            fullMark: 150 
+        },
+        { 
+            subject: 'Shoulder Form', 
+            A: normalizeAngle(avgShoulderAngle, 140), // Target ~140° for power
+            B: 130, 
+            fullMark: 150 
+        },
+        { 
+            subject: 'Knee Stability', 
+            A: normalizeAngle(avgKneeAngle, 110), // Target ~110° for stability
+            B: 120, 
+            fullMark: 150 
+        },
+        { 
+            subject: 'BOLT Score', 
+            A: avgScore > 0 ? (avgScore / 100) * 150 : 0, 
+            B: 127, // Elite ~85 score
+            fullMark: 150 
+        },
+        { 
+            subject: 'Consistency', 
+            A: avgScore > 0 ? Math.min(150, avgScore * 1.5) : 0, 
+            B: 130, 
+            fullMark: 150 
+        },
+    ];
+
     return (
         <div className="w-full h-[300px] relative">
             {/* Explicit Custom Legend since Recharts legend styling can be tricky to match perfectly */}

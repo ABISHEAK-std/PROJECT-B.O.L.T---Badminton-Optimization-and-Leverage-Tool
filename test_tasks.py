@@ -6,7 +6,6 @@ try:
     
     print("Tasks API imported.")
     
-    # Check if PoseLandmarker exists
     PoseLandmarker = vision.PoseLandmarker
     print("PoseLandmarker class found.")
     

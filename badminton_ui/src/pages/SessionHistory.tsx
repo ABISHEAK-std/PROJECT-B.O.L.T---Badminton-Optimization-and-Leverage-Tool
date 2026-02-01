@@ -2,27 +2,38 @@ import { useState, useMemo } from 'react';
 import { FilterBar } from '../components/history/FilterBar';
 import { SessionCard } from '../components/history/SessionCard';
 import { WeeklySummary } from '../components/history/WeeklySummary';
-
-// TODO: Replace with Firebase fetch from /sessions collection
-const MOCK_SESSIONS = [
-    { id: 1, date: 'October 26, 2023', score: '8.7', thumbnail: 'https://images.pexels.com/photos/11502153/pexels-photo-11502153.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
-    { id: 2, date: 'October 24, 2023', score: '9.1', thumbnail: 'https://images.pexels.com/photos/3660204/pexels-photo-3660204.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
-    { id: 3, date: 'October 22, 2023', score: '8.4', thumbnail: 'https://images.pexels.com/photos/209977/pexels-photo-209977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
-    { id: 4, date: 'October 19, 2023', score: '9.3', thumbnail: 'https://images.pexels.com/photos/8007137/pexels-photo-8007137.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
-    { id: 5, date: 'October 17, 2023', score: '8.9', thumbnail: 'https://images.pexels.com/photos/6293527/pexels-photo-6293527.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
-    { id: 6, date: 'October 15, 2023', score: '8.6', thumbnail: 'https://images.pexels.com/photos/3651674/pexels-photo-3651674.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' },
-];
+import { SessionBreakdown } from '../components/history/SessionBreakdown';
+import { useSessions } from '../hooks/useLiveData';
+import type { ArchivedSession } from '../services/liveDataService';
+import { Loader2, FolderOpen } from 'lucide-react';
 
 export default function SessionHistory() {
     const [searchQuery, setSearchQuery] = useState('');
+    const [selectedSession, setSelectedSession] = useState<ArchivedSession | null>(null);
+    const [isBreakdownOpen, setIsBreakdownOpen] = useState(false);
+    
+    const { sessions, loading } = useSessions();
 
-    // TODO: Implement complex filtering logic here if needed
     const filteredSessions = useMemo(() => {
-        return MOCK_SESSIONS.filter(session =>
-            session.date.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            session.score.includes(searchQuery)
+        if (!searchQuery.trim()) return sessions;
+        
+        const query = searchQuery.toLowerCase();
+        return sessions.filter(session =>
+            session.date?.toLowerCase().includes(query) ||
+            session.sessionId?.toLowerCase().includes(query) ||
+            String(session.score).includes(query)
         );
-    }, [searchQuery]);
+    }, [sessions, searchQuery]);
+    
+    const handleViewBreakdown = (session: ArchivedSession) => {
+        setSelectedSession(session);
+        setIsBreakdownOpen(true);
+    };
+    
+    const handleCloseBreakdown = () => {
+        setIsBreakdownOpen(false);
+        setTimeout(() => setSelectedSession(null), 300);
+    };
 
     return (
         <div className="flex flex-col h-full gap-6">
@@ -33,18 +44,51 @@ export default function SessionHistory() {
                 <div className="col-span-12 lg:col-span-9 flex flex-col h-full">
                     <FilterBar onSearch={setSearchQuery} />
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pr-2 pb-10">
-                        {filteredSessions.map((session) => (
-                            <SessionCard key={session.id} {...session} />
-                        ))}
-                    </div>
+                    {loading ? (
+                        <div className="flex-1 flex items-center justify-center">
+                            <div className="text-center">
+                                <Loader2 size={48} className="animate-spin text-primary mx-auto mb-4" />
+                                <p className="text-gray-400">Loading sessions from Firebase...</p>
+                            </div>
+                        </div>
+                    ) : filteredSessions.length === 0 ? (
+                        <div className="flex-1 flex items-center justify-center">
+                            <div className="text-center">
+                                <FolderOpen size={64} className="text-gray-600 mx-auto mb-4" />
+                                <h3 className="text-xl font-bold text-gray-400 mb-2">No Sessions Found</h3>
+                                <p className="text-gray-500 max-w-md">
+                                    {searchQuery 
+                                        ? `No sessions match "${searchQuery}". Try a different search.`
+                                        : 'Start a live analysis session to see your training history here. Sessions are automatically saved when you stop recording.'
+                                    }
+                                </p>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto pr-2 pb-10">
+                            {filteredSessions.map((session) => (
+                                <SessionCard 
+                                    key={session.id} 
+                                    session={session}
+                                    onViewBreakdown={handleViewBreakdown}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* Right Column - Summary */}
                 <div className="col-span-12 lg:col-span-3">
-                    <WeeklySummary />
+                    <WeeklySummary sessions={sessions} />
                 </div>
             </div>
+            
+            {/* Session Breakdown Modal */}
+            <SessionBreakdown
+                session={selectedSession}
+                isOpen={isBreakdownOpen}
+                onClose={handleCloseBreakdown}
+            />
         </div>
     );
 }

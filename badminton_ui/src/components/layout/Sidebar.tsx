@@ -2,15 +2,18 @@ import { Home, History, BarChart2, User, Activity } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { cn } from '../../lib/utils';
 import { motion } from 'framer-motion';
+import { useAuth } from '../../contexts/AuthContext';
 
 const navItems = [
     { icon: Home, label: 'Analysis Hub', path: '/' },
     { icon: History, label: 'Session History', path: '/history' },
-    { icon: BarChart2, label: 'Stats', path: '/stats' }, // Placeholder
-    { icon: User, label: 'Profile', path: '/profile' }, // Placeholder
+    { icon: BarChart2, label: 'Stats', path: '/stats' }, 
+    { icon: User, label: 'Profile', path: '/profile' }, 
 ];
 
 export function Sidebar() {
+    const { userProfile } = useAuth();
+
     return (
         <div className="h-screen w-20 flex flex-col items-center bg-[#0D0D0D] border-r border-white/10 py-6">
             {/* Logo */}
@@ -58,8 +61,23 @@ export function Sidebar() {
                 ))}
             </nav>
 
-            {/* User Avatar Placeholder */}
-            <div className="mt-auto w-10 h-10 rounded-full bg-gradient-to-tr from-gray-700 to-gray-600 border border-white/20"></div>
+            {/* User Avatar - Dynamic */}
+            <NavLink 
+                to="/profile"
+                className="mt-auto w-10 h-10 rounded-full border border-white/20 overflow-hidden hover:border-primary/50 transition-colors"
+            >
+                {userProfile?.photoURL ? (
+                    <img 
+                        src={userProfile.photoURL} 
+                        alt="Profile" 
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="w-full h-full bg-gradient-to-tr from-gray-700 to-gray-600 flex items-center justify-center">
+                        <User size={18} className="text-gray-400" />
+                    </div>
+                )}
+            </NavLink>
         </div>
     );
 }
